@@ -3,22 +3,31 @@
 {% block header %}
 <script src="{% url 'js-catlog' %}"></script>
 <script src="{% static '/admin/js/core.js' %}"></script>
-<link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+<!--<link rel="stylesheet" href="{% static 'admin/css/base.css' %}">-->
 <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>Create Task</h1>
-    <h2>Today is {{month}}/{{day}}/{{year}}</h2>
-    {{error}}
-    <!--<form action="/tasks/create/" method="POST">-->
-    <form action="{% url 'create_task' month day year %}" method="POST">
-        {% csrf_token %}
-        {{form.media}}
-        {{form.as_p}}
+<main class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-3">
+            
+            <!--<form action="/tasks/create/" method="POST">-->
+            <form action="{% url 'create_task' month day year %}" method="POST" class="card card-body">
+                <h1 class="text-center">Create Task</h1>
+                <h2 class="text-center">{{month}}/{{day}}/{{year}}</h2>
+                {{error}}
+                {% csrf_token %}
+                {{form.media}}
+                {{form.as_p}}
 
-        <button>
-            Save
-        </button>
-    </form>
+                <button class="btn btn-primary">
+                    Save
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+    
 {% endblock %}

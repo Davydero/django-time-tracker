@@ -5,21 +5,25 @@
 {% endblock %}
 
 {% block content %}
-<h1>Select the month: </h1>
-<form action="{% url 'my_job' %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="month" placeholder="Month" maxlength="10">
-    <input type="text" name="year" placeholder="Year" maxlength="5">
-    <button>Search</button>
-</form>
-<ul>
-    <li>Total time worked : {{totalHoras}}:{{totalminutos}}</li>
-    <li>Total time Meeting : {{totalHorasj1}}:{{totalminutosj1}}, {{percentj1}}%</li>
-    <li>Total time Visit to a client : {{totalHorasj2}}:{{totalminutosj2}}, {{percentj2}}%</li>
-    <li>Total time Quotation elaboration : {{totalHorasj3}}:{{totalminutosj3}}, {{percentj3}}%</li>
-    <li>Total time Engineering work : {{totalHorasj4}}:{{totalminutosj4}}, {{percentj4}}%</li>
-    <li>Total time Other : {{totalHorasj5}}:{{totalminutosj5}}, {{percentj5}}%</li>
-</ul>
+<h1 class="text-center">Select the month: </h1>
+<main class="container">
+    <div class="col-md-10 offset-md-4">
+        <form action="{% url 'my_job' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="month" placeholder="Month" maxlength="10">
+            <input type="text" name="year" placeholder="Year" maxlength="5">
+            <button>Search</button>
+        </form>
+        <ul>
+            <li>Total time worked : {{totalHoras}}:{{totalminutos}}</li>
+            <li>Total time Meeting : {{totalHorasj1}}:{{totalminutosj1}}, {{percentj1}}%</li>
+            <li>Total time Visit to a client : {{totalHorasj2}}:{{totalminutosj2}}, {{percentj2}}%</li>
+            <li>Total time Quotation elaboration : {{totalHorasj3}}:{{totalminutosj3}}, {{percentj3}}%</li>
+            <li>Total time Engineering work : {{totalHorasj4}}:{{totalminutosj4}}, {{percentj4}}%</li>
+            <li>Total time Other : {{totalHorasj5}}:{{totalminutosj5}}, {{percentj5}}%</li>
+        </ul>
+    </div>
+</main>
 <div width="50px">
     <canvas id="grafica"></canvas>
 </div>

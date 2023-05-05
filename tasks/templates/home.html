@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Home</h1>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga porro adipisci saepe, iusto provident quibusdam commodi maxime corrupti assumenda amet voluptates. Libero, ducimus nesciunt veritatis reiciendis fugit voluptates aliquid magni!</p>
+<main class="container py-5">
+    <section class="card card-body">
+        <h1 class="text-center">Time tracker</h1>
+        <p>Now you can track the monthly activity of your employees</p>
+        <div class="text-center">
+            <a class="btn btn-primary" href="/signin">
+                Signin
+            </a>
+            <a class="btn btn-primary" href="/signup/">
+                Signup
+            </a>
+        </div>
+    </section>
+</main>
+
 {% endblock %}

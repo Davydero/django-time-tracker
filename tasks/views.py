@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 def duration_hours(init_time, finish_time):
     if finish_time == None or init_time>finish_time:
-        return 0
+        return 0, 0
     finish_minutes = finish_time.hour*60 + finish_time.minute
     init_minutes = init_time.hour*60 + init_time.minute
     return int((finish_minutes-init_minutes)/60), int((finish_minutes-init_minutes)%60)

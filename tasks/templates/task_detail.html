@@ -3,34 +3,45 @@
 {% block header %}
 <script src="{% url 'js-catlog' %}"></script>
 <script src="{% static '/admin/js/core.js' %}"></script>
-<link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+<!--<link rel="stylesheet" href="{% static 'admin/css/base.css' %}">-->
 <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>{{task.title}}</h1>
-    <h2>{{month}}/{{day}}/{{year}}</h1>
-    {{error}}
-    <form action="{% url 'task_detail' month day year task.id %}" method="POST">
-        {% csrf_token %}
-        {{form.media}}
-        {{form.as_p}}
-        <button>
-            Update
-        </button>
-    </form>
+<main class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h1 class="text-center text-secondary">{{task.title}}</h1>
+            <h2 class="text-center">{{month}}/{{day}}/{{year}}</h1>
+            {{error}}
+            <div >
+                <form action="{% url 'task_detail' month day year task.id %}" method="POST">
+                    {% csrf_token %}
+                    {{form.media}}
+                    {{form.as_p}}
+                    <button class="btn btn-primary">
+                        Update
+                    </button>
+                </form>
+            
+                <!--<form action="{% url 'complete_task' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button>
+                        Complete
+                    </button>
+                </form>-->
+            
+                <form action="{% url 'delete_task' month day year task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">
+                        Delete
+                    </button>
+                </form> 
+            </div>
+        </div>
+    </div>
+</main>
 
-    <!--<form action="{% url 'complete_task' task.id %}" method="POST">
-        {% csrf_token %}
-        <button>
-            Complete
-        </button>
-    </form>-->
 
-    <form action="{% url 'delete_task' month day year task.id %}" method="POST">
-        {% csrf_token %}
-        <button>
-            Delete
-        </button>
-    </form>
+    
 {% endblock %}
