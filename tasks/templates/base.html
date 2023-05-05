@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
+    
+    {% block header %}
+    {% endblock %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker App</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            
+            {% if user.is_authenticated %}
+            <!--<li>
+                <a href="/tasks">Tasks Pending</a>
+            </li>
+            <li>
+                <a href="/tasks_completed">Tasks Completed</a>
+            </li>-->
+            <li>
+                <a href="/calendar/">Calendar</a>
+            </li>
+            <li>
+                <a href="/my_job/">My Job</a>
+            </li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/signup">Signup</a>
+            </li>
+            <li>
+                <a href="/signin">Signin</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<script>
+    function renderLinks(){
+      var num = document.getElementsByClassName("fc-daygrid-day-number");
+        for(var x=0;x<num.length;x++)
+        {
+            //console.log(num[x])
+            identificador = String(num[x].ariaLabel)
+            m = identificador.split(' ')[0]
+            y = identificador.split(' ')[2]
+            d = String(num[x].innerHTML)
+            num[x].href="/"+m+"/"+d+"/"+y
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+      });
+
+      calendar.render();
+      renderLinks();
+      document.querySelectorAll('button[type="button"]').forEach(button=>{
+        button.onclick =function(){
+          renderLinks();
+        }
+      });
+        
+    });
+    
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>Calendar</h1>
+<div id="calendar"></div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Signup</h1>
+{{error}}
+<!--para enviar el formulario creado por django debemos definirlo como formulario de html-->
+
+<form action="/signup/" method="POST"><!--Cuando se presione el boton se enviara la informacion a una ruta /signup/ misma que debe agragarse en urls del proyecto principal-->
+    {% csrf_token %}
+    {{form.as_p}} <!--as_p pone cad uno de los elementos de form en una etiqueta p-->
+    <button>
+        Signup
+    </button>
+
+</form>
+{% endblock %}
