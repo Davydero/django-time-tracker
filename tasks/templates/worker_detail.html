@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block header %}
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/Chart.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center">{{worker.username}}</h1>
+<h1 class="text-center">Select the month: </h1>
+<main class="container">
+    <div class="col-md-10 offset-md-4">
+        <form action="{% url 'worker_detail' worker.id %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="month" placeholder="Month" maxlength="10">
+            <input type="text" name="year" placeholder="Year" maxlength="5">
+            <button>Search</button>
+        </form>
+        <ul>
+            <li>Total time worked : {{totalHoras}}:{{totalminutos}}</li>
+            <li>Total time Meeting : {{totalHorasj1}}:{{totalminutosj1}}, {{percentj1}}%</li>
+            <li>Total time Visit to a client : {{totalHorasj2}}:{{totalminutosj2}}, {{percentj2}}%</li>
+            <li>Total time Quotation elaboration : {{totalHorasj3}}:{{totalminutosj3}}, {{percentj3}}%</li>
+            <li>Total time Engineering work : {{totalHorasj4}}:{{totalminutosj4}}, {{percentj4}}%</li>
+            <li>Total time Other : {{totalHorasj5}}:{{totalminutosj5}}, {{percentj5}}%</li>
+        </ul>
+    </div>
+</main>
+<div width="50px">
+    <canvas id="grafica"></canvas>
+</div>
+
+<script>
+    var per1 = parseInt("{{percentj1}}");
+    var per2 = parseInt("{{percentj2}}");
+    var per3 = parseInt("{{percentj3}}");
+    var per4 = parseInt("{{percentj4}}");
+    var per5 = parseInt("{{percentj5}}");
+
+    var grafica = document.getElementById("grafica");
+    var myPieChart = new Chart(grafica,{
+        type:'pie',
+        data: {
+            labels: ['Meeting', 'Visit to a client', 'Quotation elaboration','Engineering work', 'Other'],
+            datasets: [{
+                label:"Month",
+                data: [per1,per2,per3,per4,per5],
+                backgroundColor: ["#ff6384","#36a2eb","#ffcd56","#33ff99","#ffe633" ]
+            }]
+        },
+    });
+</script>
+{% endblock %}

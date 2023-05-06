@@ -36,5 +36,7 @@ urlpatterns = [
     path('tasks/<str:m>/<int:d>/<int:y>/<int:task_id>/delete/', views.delete_task, name='delete_task'),
     path('logout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),
+    path('my_team/', views.my_team, name='my_team'),
+    path('worker_detail/<int:worker_id>/', views.worker_detail, name='worker_detail'),
     path('jsi18n', JavaScriptCatalog.as_view(), name='js-catlog'),
 ]

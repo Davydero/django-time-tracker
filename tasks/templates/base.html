@@ -28,11 +28,18 @@
                     
                     {% if user.is_authenticated %}
                     <!--<li>
+
                         <a href="/tasks">Tasks Pending</a>
                     </li>
                     <li>
                         <a href="/tasks_completed">Tasks Completed</a>
                     </li>-->
+
+                    {% if request.user.groups.all.0.name == 'boss' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/my_team/">Your Team</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="/calendar/">Calendar</a>
                     </li>

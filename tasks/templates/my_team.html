@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">My team</h1>
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <ul class="list-group">
+                {% for worker in workers %}
+                <a class="list-group-item" href="{% url 'worker_detail' worker.id %}">
+                     <!--nos manda a la url con name=task_detail y pasa task.id como parametro-->
+                        
+                    <header class="d-flex justify-content-between">
+                        <strong class="fw-bold">{{worker.username}}</strong>                
+                    </header>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock %}

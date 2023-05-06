@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm #formularios de django que se crean predeterminados bastante utiles 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import TaskForm #taskform es un formato de formulario creado en base al model task
@@ -42,10 +42,12 @@ def signup(request):
         if request.POST['password1'] == request.POST['password2']:
             #register user
             try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'], last_name=request.POST['company'])
+                group = Group.objects.get(name=request.POST['role'])
+                user.groups.add(group)
                 user.save() #hasta ahora solo se guarda en la base de datos, debemos crear una cookie para el manejo de autenticacion
                 login(request, user)
-                return redirect('tasks') #llama a toda la funcion tasks definida mas abajo?
+                return redirect('home') #llama a toda la funcion tasks definida mas abajo?
                 #return render(request, 'tasks.html') #solo llamaria a tsks.html??
             except IntegrityError:
                 return render(request, 'signup.html',{
@@ -168,7 +170,7 @@ def signin(request):
             })
         else: 
             login(request, user) #se guarda la sesion del usuario
-            return redirect('tasks')
+            return redirect('home')
 @login_required        
 def calendar(request):
     return render(request, 'calendar.html')
@@ -240,3 +242,62 @@ def day(request, m,d,y):
         'year': y,
         'tasks': tasks
     })
+
+@login_required 
+def my_team(request):
+    if request.user.groups.all()[0].name == 'boss':
+        workers = User.objects.filter(last_name = request.user.last_name)
+        return render(request, 'my_team.html',{
+            'workers': workers,
+        })
+
+@login_required 
+def worker_detail(request, worker_id):
+    if request.method == 'GET':
+        worker = get_object_or_404(User, pk=worker_id)
+        return render(request, 'worker_detail.html',{
+        'worker': worker
+    })
+    else:
+        worker = get_object_or_404(User, pk=worker_id)
+        tasks = Task.objects.filter(user=worker, month=str(request.POST.get('month')), year=int(request.POST.get('year'))).order_by('day')
+        totalHoras, totalminutos = totalHorasMes(tasks)
+        tasksj1 = Task.objects.filter(user=worker, job=1, month=str(request.POST.get('month')), year=int(request.POST.get('year')))
+        totalHorasj1, totalminutosj1 = totalHorasMes(tasksj1)
+        tasksj2 = Task.objects.filter(user=worker, job=2, month=str(request.POST.get('month')), year=int(request.POST.get('year')))
+        totalHorasj2, totalminutosj2 = totalHorasMes(tasksj2)
+        tasksj3 = Task.objects.filter(user=worker, job=3, month=str(request.POST.get('month')), year=int(request.POST.get('year')))
+        totalHorasj3, totalminutosj3 = totalHorasMes(tasksj3)
+        tasksj4 = Task.objects.filter(user=worker, job=4, month=str(request.POST.get('month')), year=int(request.POST.get('year')))
+        totalHorasj4, totalminutosj4 = totalHorasMes(tasksj4)
+        tasksj5 = Task.objects.filter(user=worker, job=5, month=str(request.POST.get('month')), year=int(request.POST.get('year')))
+        totalHorasj5, totalminutosj5 = totalHorasMes(tasksj5)
+        try:
+            percentj1 = round((100/(totalHoras*60+totalminutos))*(totalHorasj1*60+totalminutosj1))
+            percentj2 = round((100/(totalHoras*60+totalminutos))*(totalHorasj2*60+totalminutosj2))
+            percentj3 = round((100/(totalHoras*60+totalminutos))*(totalHorasj3*60+totalminutosj3))
+            percentj4 = round((100/(totalHoras*60+totalminutos))*(totalHorasj4*60+totalminutosj4))
+            percentj5 = round((100/(totalHoras*60+totalminutos))*(totalHorasj5*60+totalminutosj5))
+        except ZeroDivisionError:
+            return render(request, 'worker_detail.html')
+
+        return render(request, 'worker_detail.html',{
+            'worker': worker,
+            'totalHoras':totalHoras,
+            'totalminutos':totalminutos,
+            'totalHorasj1':totalHorasj1,
+            'totalminutosj1':totalminutosj1,
+            'totalHorasj2':totalHorasj2,
+            'totalminutosj2':totalminutosj2,
+            'totalHorasj3':totalHorasj3,
+            'totalminutosj3':totalminutosj3,
+            'totalHorasj4':totalHorasj4,
+            'totalminutosj4':totalminutosj4,
+            'totalHorasj5':totalHorasj5,
+            'totalminutosj5':totalminutosj5,
+            'percentj1':percentj1,
+            'percentj2':percentj2,
+            'percentj3':percentj3,
+            'percentj4':percentj4,
+            'percentj5':percentj5,
+        })

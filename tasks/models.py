@@ -23,9 +23,10 @@ class Task(models.Model):
     finish_time = models.TimeField(null=True, blank=True)
     durationH = models.IntegerField(null=True)
     durationm = models.IntegerField(null=True)
-    #datecompleted = models.DateTimeField(null=True, blank=True)
+    datecompleted = models.DateTimeField(null=True, blank=True)
     #important = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE) #Relaciona la tabla de tareas con la de usuarios. ademas si se borra un usuario se borran sus tareas asociadas
 
     def __str__(self):
         return self.title + '- by '+ self.user.username
+        

@@ -5,6 +5,9 @@
     <section class="card card-body">
         <h1 class="text-center">Time tracker</h1>
         <p>Now you can track the monthly activity of your employees</p>
+        {% if user.is_authenticated %}
+        <p>Welcome {{user}}</p>
+        {% else %}
         <div class="text-center">
             <a class="btn btn-primary" href="/signin">
                 Signin
@@ -13,6 +16,7 @@
                 Signup
             </a>
         </div>
+        {% endif %}
     </section>
 </main>
 
