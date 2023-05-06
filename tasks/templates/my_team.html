@@ -8,7 +8,7 @@
             <ul class="list-group">
                 {% for worker in workers %}
                 <a class="list-group-item" href="{% url 'worker_detail' worker.id %}">
-                     <!--nos manda a la url con name=task_detail y pasa task.id como parametro-->
+                     <!--nos manda a la url con name=worker_detail y pasa worker.id como parametro-->
                         
                     <header class="d-flex justify-content-between">
                         <strong class="fw-bold">{{worker.username}}</strong>                
