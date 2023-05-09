@@ -4,6 +4,8 @@
 Django project to track the time spent by your employees. Is a web app where Your employees have to add their works made day by day and the duratiton of the sames each day along the month. 
 So at the end of the month you can check their performance reviewing how many hours they spent in specific tasks. There are two types of users: Boss and Worker. You
 and your employees have to specify the name of the company when signin up.
+<a href="http://davydero.pythonanywhere.com/">You can check the deployed version here<a>
+  
 <p align="center">
 <img src="https://github.com/Davydero/django-time-tracker/blob/main/Signup.PNG">
 </p>
